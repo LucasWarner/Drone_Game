@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="846437fe-ca7a-48fc-b159-58f2e0d24829" name="Changes" comment="" />
+    <list default="true" id="846437fe-ca7a-48fc-b159-58f2e0d24829" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +20,21 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LucasWarner&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LucasWarner/Drone_Game.git&quot;,
+    &quot;accountId&quot;: &quot;cac465dd-d98e-47f5-abaf-4cfa121d1c91&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -25,22 +43,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Drone Game.executor": "Run",
-    "Python.FP Drone game rev 2.executor": "Run",
-    "Python.FP Drone game.executor": "Run",
-    "Python.drone.executor": "Run",
-    "Python.game.executor": "Run",
-    "Python.game_old.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.main_Nov_17.executor": "Run",
-    "Python.spatial_grid.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/rdand/PycharmProjects/MAAE 4904",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Drone Game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FP Drone game rev 2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FP Drone game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.drone.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game_old.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_Nov_17.executor&quot;: &quot;Run&quot;,
+    &quot;Python.spatial_grid.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rdand/OneDrive/Documents/GitHub/drone game&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\rdand\PycharmProjects\MAAE 4902 Project\.venv\Scripts" />
@@ -49,7 +70,7 @@
       <recent name="C:\Users\rdand\PycharmProjects\MAAE 4902 Project\.venv\Scripts\old" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.FP Drone game">
+  <component name="RunManager" selected="Python.main">
     <configuration name="Drone Game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MAAE 4902 Project RL" />
       <option name="ENV_FILES" value="" />
@@ -59,7 +80,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (.venv)" />
       <option name="WORKING_DIRECTORY" value="C:\Users\rdand\PycharmProjects\MAAE 4902 Project" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -73,7 +93,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="FP Drone game" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="MAAE 4902 Project RL" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -82,12 +102,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (.venv)" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\rdand\PycharmProjects\MAAE 4902 Project" />
+      <option name="SDK_NAME" value="Python 3.12" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\rdand\OneDrive\Documents\GitHub\drone game" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../MAAE 4902 Project/.venv/Scripts/FP Drone game.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -105,7 +125,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (.venv)" />
       <option name="WORKING_DIRECTORY" value="C:\Users\rdand\PycharmProjects\MAAE 4902 Project" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -120,7 +139,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.FP Drone game" />
+      <item itemvalue="Python.main" />
       <item itemvalue="Python.main_Nov_17" />
       <item itemvalue="Python.Drone Game" />
     </list>
@@ -133,7 +152,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-0e3be3396995-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23339.19" />
+        <option value="bundled-python-sdk-fb887030ada0-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.21565.199" />
       </set>
     </attachedChunks>
   </component>
