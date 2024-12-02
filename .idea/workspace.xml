@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="846437fe-ca7a-48fc-b159-58f2e0d24829" name="Changes" comment="added PPO (in development)">
-      <change beforePath="$PROJECT_DIR$/PPO/main2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/main2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/drone_env.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/drone_env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/game2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/main2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +61,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/rdand/Github/Drone_Game",
+    "last_opened_file_path": "C:/Users/rdand/Github/Drone_Game/PPO",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
@@ -105,11 +108,11 @@
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="SDK_NAME" value="Python 3.12 (MAAE-4904-Project)" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\rdand\Github\Drone_Game" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\rdand\Github\Drone_Game\PPO" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PPO/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
