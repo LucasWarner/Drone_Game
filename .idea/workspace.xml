@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="846437fe-ca7a-48fc-b159-58f2e0d24829" name="Changes" comment="added PPO (in development)">
-      <change beforePath="$PROJECT_DIR$/drone.py" beforeDir="false" afterPath="$PROJECT_DIR$/drone.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/main2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/main2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
