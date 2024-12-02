@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="846437fe-ca7a-48fc-b159-58f2e0d24829" name="Changes" comment="added PPO (in development)">
+    <list default="true" id="846437fe-ca7a-48fc-b159-58f2e0d24829" name="Changes" comment="PPO works.... kinda">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PPO/drone_env.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/drone_env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PPO/game2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PPO/main2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,11 +199,20 @@
       <option name="project" value="LOCAL" />
       <updated>1733100134068</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="PPO works.... kinda">
+      <option name="closed" value="true" />
+      <created>1733105820458</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1733105820458</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added PPO (in development)" />
-    <option name="LAST_COMMIT_MESSAGE" value="added PPO (in development)" />
+    <MESSAGE value="PPO works.... kinda" />
+    <option name="LAST_COMMIT_MESSAGE" value="PPO works.... kinda" />
   </component>
 </project>
