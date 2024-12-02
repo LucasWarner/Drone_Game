@@ -12,7 +12,7 @@ from OpenGL.GLU import *
 
 WIDTH, HEIGHT = 800, 600
 SIZE = 0.5
-ROTATION_SPEED = 3
+ROTATION_SPEED = 2
 ACCELERATION = 0.01
 DECELERATION = 0.005
 MAX_VELOCITY = 0.2
@@ -136,8 +136,8 @@ class Game:
             self.agent.remember(self.state, action, reward, next_state, self.done)
             self.state = next_state
 
-            if len(self.agent.memory) > 16:
-                self.agent.replay(16)
+            if len(self.agent.memory) > 32:
+                self.agent.replay(32)
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
             self.update_view()
@@ -241,21 +241,20 @@ class Game:
         # Calculate the drone's heading vector
         heading_radians = np.radians(self.drone.heading)
         drone_heading_vector = np.array([-np.cos(heading_radians), np.sin(heading_radians)])
+        drone_heading_vector /= np.linalg.norm(drone_heading_vector)
         print(drone_heading_vector)
         # Calculate alignment using dot product and velocity using norm
         alignment = np.dot(drone_heading_vector, direction_to_goal)
         velocity_magnitude = np.linalg.norm(self.drone.velocity)
         # Reward for heading towards the goal
         reward += alignment * 2  # Scale the reward as needed
+        reward += pow(np.linalg.norm(distance_to_goal),-1)
         # if alignment correct increase reward
         print(self.drone.position)
-        if np.linalg.norm(distance_to_goal) < np.linalg.norm(prev_distance_to_goal):
+        if np.linalg.norm(distance_to_goal) - np.linalg.norm(prev_distance_to_goal) < -.2:
             reward += .5
         else:
             reward += -.1
-        if alignment > 0.999:
-            reward += alignment * 10
-            print("correct alignment")
         # if velocity less then 55% correct then decrease reward
         if np.dot([self.drone.velocity[0], self.drone.velocity[2]], direction_to_goal) < .55:
             reward += -velocity_magnitude * 5
@@ -269,34 +268,37 @@ class Game:
             return -18
         #if alignment and velocity vector are correct increase reward
         if alignment > 0.9 and np.dot([self.drone.velocity[0], self.drone.velocity[2]], direction_to_goal) > .75:
-            reward += alignment * 10 + velocity_magnitude * 20
+            reward += alignment + velocity_magnitude * 20
             print("aligned and proceeding in correct direction")
-        else:
-            reward += -.5
-            print("no alignment or correct velocity vector")
         #if drone is too high make it go down
-        if self.drone.position[1] > 50:
-            return -8
-            # Favor action 5
+        if self.drone.position[1] > 10:
             print("drone too high!")
+            return -8
+            # Favor action 8
         if self.drone.position[0] > 90:
+            print("drone too far!")
             return -10
-            # Favor action 5
-            print("drone too far!")
+            # Favor action 8
         if self.drone.position[0] < -90:
+            print("drone too far!")
             return -12
-            # Favor action 5
-            print("drone too far!")
+            # Favor action 8
         if self.drone.position[2] > 90:
+            print("drone too far!")
             return -14
-            # Favor action 5
-            print("drone too far!")
+            # Favor action 8
         if self.drone.position[2] < -90:
-            return -16
-            # Favor action 5
             print("drone too far!")
+            return -16
+            # Favor action 8
+
         if self.spatial_grid.nearby_obstacles(self.drone, SIZE, 2):
+            print("nearby obstacle detected")
             return -2
+        if alignment > 0.999:
+            print("correct alignment")
+            return 10
+
         print(reward)
         # Combine rewards
         return reward

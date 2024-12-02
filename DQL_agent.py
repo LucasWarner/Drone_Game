@@ -12,7 +12,7 @@ class DQLAgent:
         self.memory = deque(maxlen=2000)
         self.position_history = deque(maxlen=100)  # Store last 100 positions
         self.action_history = deque(maxlen=100)    # Store last 100 actions
-        self.gamma = 0.15    # discount rate
+        self.gamma = 0.2    # discount rate
         self.epsilon = 1.5  # exploration rate
         self.epsilon_min = 0.1
         self.epsilon_decay = 0.99
@@ -28,17 +28,31 @@ class DQLAgent:
     def act(self, state):
         # Optionally use position_history and action_history here
         if len(self.memory) > 0:
+            reward = self.memory[-1][2]
             if len(self.memory) > 1:
                 previous_reward = self.memory[-2][2]
-            else:
-                previous_reward = 0
-            reward = self.memory[-1][2]
+                previous_action = self.memory[-2][1]
+                if reward - previous_reward > 0:
+                    if np.random.rand() <= self.epsilon:
+                        if previous_action == 1:
+                            return 2
+                        elif previous_action == 2:
+                            return 1
+                        elif previous_action == 0:
+                            self.epsilon = 1
+                            return 8
+                    else:
+                        print("chose optimal action")
+                        act_values = self.model(torch.FloatTensor(state))
+                        return torch.argmax(act_values).item()
+
             '''
             if reward - previous_reward > 0:
                 self.epsilon = 1
                 return 8
             '''
             print(reward)
+
             if reward == -2:
                 self.epsilon = .8
                 if np.random.rand() <= self.epsilon:
@@ -48,35 +62,35 @@ class DQLAgent:
                     print("chose optimal action")
                     act_values = self.model(torch.FloatTensor(state))
                     return torch.argmax(act_values).item()
-            if reward == -8:  # select action 5 when reward is low
+            elif reward == -8:  # select action 5 when reward is low
                 print("chose to go down because drone to high")
                 return 5
-            if reward == -18:
+            elif reward == -18:
                 self.epsilon = 1
                 return 4
-            if reward == -16:
+            elif reward == -16:
                 return 8
-            if reward == -14:
+            elif reward == -14:
                 return 8
-            if reward == -12:
+            elif reward == -12:
                 return 8
-            if reward == -10:
+            elif reward == -10:
                 return 8
-            if 1 > reward > -4:
+            elif 2 > reward > -4:
                 if np.random.rand() <= self.epsilon:
-                    if np.random.rand() <= .75:
-                        print("chose rotate right")
-                        return 1
-                    else:
-                        print("chose rotate left")
-                        return 2
+                    print("chose rotate right")
+                    return 1
                 else:
                     print("chose optimal action")
                     act_values = self.model(torch.FloatTensor(state))
                     return torch.argmax(act_values).item()
-            if reward > 2.0:  # select action 5 when reward is low
-                print("chose to go down because drone to high")
-                return 0
+            elif reward == 10:
+                print("chose to go forward or down because drone is aligned")
+                for_or_down = random.randint(0, 1)
+                if for_or_down == 0:
+                    return 0
+                else:
+                    return 5
             if np.random.rand() <= self.epsilon:
                 print("chose random action")
                 return random.randint(0, self.action_size -1)
