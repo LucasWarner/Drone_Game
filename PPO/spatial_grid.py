@@ -18,9 +18,9 @@ class SpatialGrid:
     def detect_nearby_obstacles(self, drone, size, radius):
         nearby_obstacles = []
         x, y, z = drone.position
-        for i in range(int(x - radius), int(x + radius) + 1):
-            for j in range(int(y - radius), int(y + radius)+ 1):
-                for k in range(int(z - radius), int(z + radius) + 1):
+        for i in range(int(x - radius), int(x + radius + size/4)):
+            for j in range(int(y - radius), int(y + radius+ size/4)):
+                for k in range(int(z - radius), int(z + radius + size/2)):
                     key = (i // self.cell_size, j // self.cell_size, k // self.cell_size)
                     if key in self.grid:
                         nearby_obstacles.extend(self.grid[key])
@@ -29,9 +29,9 @@ class SpatialGrid:
     def nearby_obstacles(self, drone, size, radius):
         nearby_obstacles = []
         x, y, z = drone.position
-        for i in range(int(x - radius), int(x + radius) + 1):
-            for j in range(int(y - radius), int(y + radius) + 1):
-                for k in range(int(z - radius), int(z + radius) + 1):
+        for i in range(int(x - radius), int(x + radius + size/4)):
+            for j in range(int(y - radius), int(y + radius + size/4)):
+                for k in range(int(z - radius), int(z + radius + size/2)):
                     key = (i // self.cell_size, j // self.cell_size, k // self.cell_size)
                     if key in self.grid:
                         nearby_obstacles.extend(self.grid[key])

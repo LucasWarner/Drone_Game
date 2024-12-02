@@ -68,7 +68,22 @@ class Game:
         self.clock = pygame.time.Clock()
         self.key_pressed = False
         self.env = DroneEnv()
-        self.model = PPO("MlpPolicy", self.env, verbose=1)
+        self.model = PPO(
+            policy="MlpPolicy",
+            env=self.env,
+            learning_rate=0.0022,
+            n_steps=2048,
+            batch_size=64,
+            n_epochs=10,
+            gamma=0.96,
+            gae_lambda=0.95,
+            clip_range=0.2,
+            ent_coef=0.0,
+            vf_coef=0.5,
+            max_grad_norm=0.5,
+            verbose=2,
+            tensorboard_log="./ppo_tensorboard/"
+        )
 
 
     def run(self):
@@ -96,7 +111,7 @@ class Game:
         action, _states = self.model.predict(obs)
 
         # 3. Apply action and get new state
-        obs, reward, done, truncated, info = self.env.step(action)
+        self.env.step(action)
 
         # 4. Update elements
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -122,7 +137,7 @@ class Game:
         self.env.drone.draw(tri_vertices, tri_edges)  # Draw the rotated drone shape
         glPopMatrix()
 
-        camera_matrix = [0, 3]
+        camera_matrix = [0, 6]
 
         # Define the camera position relative to the drone
         rotated_camera = np.matmul(rotation_matrix, camera_matrix)

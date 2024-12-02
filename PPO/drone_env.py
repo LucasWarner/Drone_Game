@@ -19,11 +19,13 @@ BOUNDARY_TOLERANCE = 0
 
 
 
+
 class DroneEnv(gym.Env):
     def __init__(self):
         super().__init__()
         self.goal_position = np.array([50,3,50])
         self.latest_reward = 0
+        self.previous_action = 0
         self.drone = Drone([0, 2, 0], [0.0, 0.0, 0.0], 0)
         self.obstacles = self.generate_obstacles(45)
         self.spatial_grid = SpatialGrid(cell_size=10)
@@ -49,7 +51,9 @@ class DroneEnv(gym.Env):
     self.drone.reset()  # Implement this in your Drone class if not exists
     return self.get_observation(), {}
     """
-
+    def calculate_rm(self):
+        return np.array([[np.cos(np.radians(self.drone.heading)), -np.sin(np.radians(self.drone.heading))],
+                                    [np.sin(np.radians(self.drone.heading)), np.cos(np.radians(self.drone.heading))]])
     def check_collision(self, radius):
 
         drone_min_x, drone_max_x = self.drone.position[0] - (SIZE / 4 + BOUNDARY_TOLERANCE), \
@@ -94,59 +98,63 @@ class DroneEnv(gym.Env):
                 self.drone.heading,
                 self.drone.velocity[0], self.drone.velocity[1], self.drone.velocity[2]])
     def do_nothing(self):
-        self.drone.update_position(DECELERATION, False, self.check_collision(5))
+        self.drone.update_position(DECELERATION, False, self.check_collision(.4))
     def move_up(self):
         delta_v = [self.drone.velocity[0], self.drone.velocity[1] + ACCELERATION, self.drone.velocity[2]]
         self.drone.update_velocity(delta_v, MAX_VELOCITY)
-        self.drone.update_position(DECELERATION, True, self.check_collision(5))
+        self.drone.update_position(DECELERATION, True, self.check_collision(.4))
 
     def move_down(self):
         delta_v = [self.drone.velocity[0], self.drone.velocity[1] - ACCELERATION, self.drone.velocity[2]]
         self.drone.update_velocity(delta_v, MAX_VELOCITY)
-        self.drone.update_position(DECELERATION, True, self.check_collision(5))
+        self.drone.update_position(DECELERATION, True, self.check_collision(.4))
 
-    def move_left(self, rotation_matrix):
+    def move_left(self):
+        rotation_matrix = self.calculate_rm()
         delta_a = np.matmul(rotation_matrix, [-ACCELERATION, 0])
         delta_v = [self.drone.velocity[0] + delta_a[0], self.drone.velocity[1], self.drone.velocity[2] + delta_a[1]]
         self.drone.update_velocity(delta_v, MAX_VELOCITY)
-        self.drone.update_position(DECELERATION, True, self.check_collision(5))
+        self.drone.update_position(DECELERATION, True, self.check_collision(.4))
 
-    def move_right(self, rotation_matrix):
+    def move_right(self):
+        rotation_matrix = self.calculate_rm()
         delta_a = np.matmul(rotation_matrix, [ACCELERATION, 0])
         delta_v = [self.drone.velocity[0] + delta_a[0], self.drone.velocity[1], self.drone.velocity[2] + delta_a[1]]
         self.drone.update_velocity(delta_v, MAX_VELOCITY)
-        self.drone.update_position(DECELERATION, True, self.check_collision(5))
+        self.drone.update_position(DECELERATION, True, self.check_collision(.4))
 
-    def move_forward(self, rotation_matrix):
+    def move_forward(self):
+        rotation_matrix = self.calculate_rm()
         delta_a = np.matmul(rotation_matrix, [0, -ACCELERATION]).tolist()
         delta_v = [self.drone.velocity[0] + delta_a[0], self.drone.velocity[1], self.drone.velocity[2] + delta_a[1]]
         self.drone.update_velocity(delta_v, MAX_VELOCITY)
-        self.drone.update_position(DECELERATION, True, self.check_collision(5))
+        self.drone.update_position(DECELERATION, True, self.check_collision(.4))
 
-    def move_backward(self, rotation_matrix):
+    def move_backward(self):
+        rotation_matrix = self.calculate_rm()
         delta_a = np.matmul(rotation_matrix, [0, ACCELERATION])
         delta_v = [self.drone.velocity[0] + delta_a[0], self.drone.velocity[1], self.drone.velocity[2] + delta_a[1]]
         self.drone.update_velocity(delta_v, MAX_VELOCITY)
-        self.drone.update_position(DECELERATION, True, self.check_collision(5))
+        self.drone.update_position(DECELERATION, True, self.check_collision(.4))
 
     def rotate_left(self):
         self.drone.heading -= ROTATION_SPEED
-        self.drone.update_position(DECELERATION, False, self.check_collision(5))
+        self.drone.update_position(DECELERATION, False, self.check_collision(.4))
 
     def rotate_right(self):
         self.drone.heading += ROTATION_SPEED
-        self.drone.update_position(DECELERATION, False, self.check_collision(5))
+        self.drone.update_position(DECELERATION, False, self.check_collision(.4))
 
     def step(self, action):
-        rotation_matrix = np.array([[np.cos(np.radians(self.drone.heading)), -np.sin(np.radians(self.drone.heading))],
-                                    [np.sin(np.radians(self.drone.heading)), np.cos(np.radians(self.drone.heading))]])
-        reward = self.calculate_reward(action)
-        self.latest_reward = reward
-        if self.latest_reward == 100 or self.latest_reward == -10 or self.latest_reward == -12 or self.latest_reward == -14 or self.latest_reward == -16:
+
+
+        reward = self.calculate_reward(action, self.latest_reward)
+
+        if reward == 100 or reward == -10 or reward == -12 or reward == -14 or reward == -16:
             action = 0
-        elif self.latest_reward == -18:
+        elif reward == -18:
             action = 1
-        elif self.latest_reward == -8:
+        elif reward == -8:
             action = 2
         #Apply the action using drone's existing methods
         if action == 0:
@@ -156,27 +164,27 @@ class DroneEnv(gym.Env):
         elif action == 2:
             self.move_down()
         elif action == 3:
-            self.move_left(rotation_matrix)
+            self.move_left()
         elif action == 4:
-            self.move_right(rotation_matrix)
+            self.move_right()
         elif action == 5:
-            self.move_forward(rotation_matrix)
+            self.move_forward()
         elif action == 6:
-            self.move_backward(rotation_matrix)
+            self.move_backward()
         elif action == 7:
             self.rotate_left()
         elif action == 8:
             self.rotate_right()
 
-        reward = self.calculate_reward(action)
+        self.latest_reward = reward
         # Get observation after action
         obs = self.get_observation()
         # Check if episode is done
         done = False  # Define your termination conditions
         info = {}
 
-        return obs, reward, done, False, {}
-    def calculate_reward(self, action):
+        return obs, reward, done, False, {}#, favourable_action
+    def calculate_reward(self, action, prev_reward):
         # Calculate and return the reward for the given action
         reward = 0  # Define your reward function
         # Calculate the direction to the goal
@@ -196,10 +204,9 @@ class DroneEnv(gym.Env):
         velocity_magnitude = np.linalg.norm(self.drone.velocity)
         # Reward for heading towards the goal
         reward += alignment * 3  # Scale the reward as needed
-        reward += pow(np.linalg.norm(distance_to_goal), -1) * 5
+        reward += pow(np.linalg.norm(distance_to_goal), -1) * 10
         # if alignment correct increase reward
-        print(self.drone.position)
-        if np.linalg.norm(distance_to_goal) - np.linalg.norm(prev_distance_to_goal) < -.2:
+        if np.linalg.norm(distance_to_goal) - np.linalg.norm(prev_distance_to_goal) < -.1:
             reward += pow(np.linalg.norm(distance_to_goal) - np.linalg.norm(prev_distance_to_goal),-1) * 20
         else:
             reward += -.1
@@ -241,13 +248,45 @@ class DroneEnv(gym.Env):
             # Favor action 8
         if self.spatial_grid.nearby_obstacles(self.drone, SIZE, .4):
             print("nearby obstacle detected")
-            reward += -pow(self.spatial_grid.nearby_obstacle_distance(self.drone, .4),-1) * 20
-        if alignment > 0.99:
-            print("correct alignment")
+            reward += -pow(self.spatial_grid.nearby_obstacle_distance(self.drone, .4),-1) * 50
+        if 0.99 < alignment < 0.9992:
+            print("almost correct alignment")
             reward += alignment * 4
+        if alignment > 0.9992:
+            print("correct alignment")
+            reward += alignment * 5
+            self.move_forward()
+            self.step(action)
+        """
+        if prev_reward > reward:
+            if random.uniform(0,1) < .5:
+                next_action = action
+            else:
+                next_action = random.randint(0,8)
+        else:
+            next_action = random.randint(0,8)
+        """
+        # Reward shaping based on opposite actions
+        if action == 7 and self.previous_action == 8:
+            reward += -3  # Penalize for taking opposite actions consecutively
+        elif action == 8 and self.previous_action == 7:
+            reward += -3  # Penalize for taking opposite actions consecutively
+        if action == 5 and self.previous_action == 6:
+            reward += -3  # Penalize for taking opposite actions consecutively
+        elif action == 6 and self.previous_action == 5:
+            reward += -3  # Penalize for taking opposite actions consecutively
+        if action == 3 and self.previous_action == 4:
+            reward += -3  # Penalize for taking opposite actions consecutively
+        elif action == 4 and self.previous_action == 3:
+            reward += -3  # Penalize for taking opposite actions consecutively
+        if action == 1 and self.previous_action == 2:
+            reward += -3  # Penalize for taking opposite actions consecutively
+        elif action == 2 and self.previous_action == 1:
+            reward += -3  # Penalize for taking opposite actions consecutively
 
+        self.previous_action = action
         print(reward)
-        return reward
+        return reward#, next_action
 
     def get_latest_reward(self):
         # Return the latest reward
