@@ -255,8 +255,8 @@ class DroneEnv(gym.Env):
         if alignment > 0.9992:
             print("correct alignment")
             reward += alignment * 5
-            self.move_forward()
-            self.step(action)
+            if random.randint(0,1) == 1:
+                self.move_forward()
         """
         if prev_reward > reward:
             if random.uniform(0,1) < .5:
