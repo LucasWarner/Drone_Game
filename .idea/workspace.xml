@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="846437fe-ca7a-48fc-b159-58f2e0d24829" name="Changes" comment="PPO works.... kinda">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/drone_env.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/drone_env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/spatial_grid.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO/spatial_grid.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,12 +31,12 @@
     &quot;assignee&quot;: &quot;LucasWarner&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/LucasWarner/Drone_Game.git",
-    "accountId": "eb83d242-a50e-4929-a693-e3b423a2f941"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LucasWarner/Drone_Game.git&quot;,
+    &quot;accountId&quot;: &quot;eb83d242-a50e-4929-a693-e3b423a2f941&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -42,26 +45,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Drone Game.executor": "Run",
-    "Python.FP Drone game rev 2.executor": "Run",
-    "Python.FP Drone game.executor": "Run",
-    "Python.drone.executor": "Run",
-    "Python.game.executor": "Run",
-    "Python.game_old.executor": "Run",
-    "Python.main PPO.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.main_Nov_17.executor": "Run",
-    "Python.spatial_grid.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/rdand/Github/Drone_Game/PPO",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Drone Game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FP Drone game rev 2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FP Drone game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.drone.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game_old.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main PPO.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_Nov_17.executor&quot;: &quot;Run&quot;,
+    &quot;Python.spatial_grid.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rdand/Github/Drone_Game/PPO&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\rdand\Github\Drone_Game" />

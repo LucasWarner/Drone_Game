@@ -26,7 +26,16 @@ vertices = [
     [-SIZE, 0, SIZE],
     [-SIZE, SIZE * 2, SIZE]
 ]
-
+goal_vertices= [
+    [55, 5, 45],
+    [55, 0.1, 45],
+    [45, 0.1, 45],
+    [45, 5, 45],
+    [55, 5, 55],
+    [55, 0.1, 55],
+    [45, 0.1, 55],
+    [45, 5, 55]
+]
 edges = [
     (0, 1),
     (2, 3),
@@ -94,7 +103,7 @@ class Game:
         self.update_view()
 
         self.env.draw_ground_plane()
-        self.env.draw_goal_box()
+        self.env.draw_goal_box(goal_vertices, edges)
         for obstacle in self.env.obstacles:
             obstacle.draw(vertices, edges)
 

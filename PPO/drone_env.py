@@ -1,4 +1,5 @@
 import gym
+import math
 from gym import spaces
 import random
 import numpy as np
@@ -22,6 +23,7 @@ class DroneEnv(gym.Env):
     def __init__(self):
         super().__init__()
         self.goal_position = np.array([50,3,50])
+        self.latest_reward = 0
         self.drone = Drone([0, 2, 0], [0.0, 0.0, 0.0], 0)
         self.obstacles = self.generate_obstacles(45)
         self.spatial_grid = SpatialGrid(cell_size=10)
@@ -91,7 +93,8 @@ class DroneEnv(gym.Env):
         return np.array([self.drone.position[0],self.drone.position[1],self.drone.position[2],
                 self.drone.heading,
                 self.drone.velocity[0], self.drone.velocity[1], self.drone.velocity[2]])
-
+    def do_nothing(self):
+        self.drone.update_position(DECELERATION, False, self.check_collision(5))
     def move_up(self):
         delta_v = [self.drone.velocity[0], self.drone.velocity[1] + ACCELERATION, self.drone.velocity[2]]
         self.drone.update_velocity(delta_v, MAX_VELOCITY)
@@ -137,9 +140,18 @@ class DroneEnv(gym.Env):
     def step(self, action):
         rotation_matrix = np.array([[np.cos(np.radians(self.drone.heading)), -np.sin(np.radians(self.drone.heading))],
                                     [np.sin(np.radians(self.drone.heading)), np.cos(np.radians(self.drone.heading))]])
-
-        # Apply the action using drone's existing methods
-        if action == 1:
+        reward = self.calculate_reward(action)
+        self.latest_reward = reward
+        if self.latest_reward == 100 or self.latest_reward == -10 or self.latest_reward == -12 or self.latest_reward == -14 or self.latest_reward == -16:
+            action = 0
+        elif self.latest_reward == -18:
+            action = 1
+        elif self.latest_reward == -8:
+            action = 2
+        #Apply the action using drone's existing methods
+        if action == 0:
+            self.do_nothing()
+        elif action == 1:
             self.move_up()
         elif action == 2:
             self.move_down()
@@ -156,10 +168,16 @@ class DroneEnv(gym.Env):
         elif action == 8:
             self.rotate_right()
 
+        reward = self.calculate_reward(action)
         # Get observation after action
         obs = self.get_observation()
+        # Check if episode is done
+        done = False  # Define your termination conditions
+        info = {}
 
-        # Calculate reward
+        return obs, reward, done, False, {}
+    def calculate_reward(self, action):
+        # Calculate and return the reward for the given action
         reward = 0  # Define your reward function
         # Calculate the direction to the goal
         prev_distance_to_goal = self.goal_position - self.drone.last_position
@@ -177,64 +195,64 @@ class DroneEnv(gym.Env):
         alignment = np.dot(drone_heading_vector, direction_to_goal)
         velocity_magnitude = np.linalg.norm(self.drone.velocity)
         # Reward for heading towards the goal
-        reward += alignment * 2  # Scale the reward as needed
-        reward += pow(np.linalg.norm(distance_to_goal), -1)
+        reward += alignment * 3  # Scale the reward as needed
+        reward += pow(np.linalg.norm(distance_to_goal), -1) * 5
         # if alignment correct increase reward
         print(self.drone.position)
         if np.linalg.norm(distance_to_goal) - np.linalg.norm(prev_distance_to_goal) < -.2:
-            reward += .5
+            reward += pow(np.linalg.norm(distance_to_goal) - np.linalg.norm(prev_distance_to_goal),-1) * 20
         else:
             reward += -.1
         # if velocity less then 55% correct then decrease reward
         if np.dot([self.drone.velocity[0], self.drone.velocity[2]], direction_to_goal) < .55:
-            reward += -velocity_magnitude * 5
+            reward += -velocity_magnitude
             print("not correct velocity vector")
         # Reward for reaching the goal
         if np.linalg.norm(self.drone.position - self.goal_position) < SIZE:
-            reward += 100.0
+            return 100.0
         # if drone is too low command it to go up
-        if self.drone.position[1] < 2.5:
+        if self.drone.position[1] < 2:
             print("drone too low!")
-            reward += self.drone.position[1] - 2.5
+            return -18.0
         # if alignment and velocity vector are correct increase reward
-        if alignment > 0.9 and np.dot([self.drone.velocity[0], self.drone.velocity[2]], direction_to_goal) > .75:
-            reward += alignment + velocity_magnitude * 20
-            print("aligned and proceeding in correct direction")
+        if np.dot([self.drone.velocity[0], self.drone.velocity[2]], direction_to_goal) > .75:
+            reward += velocity_magnitude * 5
+            print("proceeding in correct direction")
         # if drone is too high make it go down
         if self.drone.position[1] > 10:
             print("drone too high!")
-            reward += -8.0
+            return -8.0
             # Favor action 8
         if self.drone.position[0] > 90:
             print("drone too far!")
-            reward += -10.0
+            return -10.0
             # Favor action 8
         if self.drone.position[0] < -90:
             print("drone too far!")
-            reward += -12.0
+            return -12.0
             # Favor action 8
         if self.drone.position[2] > 90:
             print("drone too far!")
-            reward += -14.0
+            return -14.0
             # Favor action 8
         if self.drone.position[2] < -90:
             print("drone too far!")
-            reward += -16.0
+            return -16.0
             # Favor action 8
-
-        if self.spatial_grid.nearby_obstacles(self.drone, SIZE, 2):
+        if self.spatial_grid.nearby_obstacles(self.drone, SIZE, .4):
             print("nearby obstacle detected")
-            reward += -2.0
-        if alignment > 0.999:
+            reward += -pow(self.spatial_grid.nearby_obstacle_distance(self.drone, .4),-1) * 20
+        if alignment > 0.99:
             print("correct alignment")
-            reward += 10.0
+            reward += alignment * 4
 
         print(reward)
-        # Check if episode is done
-        done = False  # Define your termination conditions
-        info = {}
+        return reward
 
-        return obs, reward, done, False, {}
+    def get_latest_reward(self):
+        # Return the latest reward
+        return self.latest_reward
+
     def render(self, mode='human'):
         self.game.run()
 
@@ -249,17 +267,12 @@ class DroneEnv(gym.Env):
         glEnd()
 
     @staticmethod
-    def draw_goal_box():
+    def draw_goal_box(vertices, edges):
         glColor4f(1, 1, 0, 1)
-        glBegin(GL_QUADS)
-        glVertex3f(55, 0, 45)
-        glVertex3f(55, 0, 55)
-        glVertex3f(45, 0, 45)
-        glVertex3f(55, 0, 45)
-        glVertex3f(55, 5, 45)
-        glVertex3f(55, 5, 55)
-        glVertex3f(45, 5, 45)
-        glVertex3f(55, 5, 45)
+        glBegin(GL_LINES)
+        for edge in edges:
+            for vertex in edge:
+                glVertex3fv(vertices[vertex])
         glEnd()
 
     @staticmethod
